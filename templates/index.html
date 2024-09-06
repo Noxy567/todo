@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>TODO LIST</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+</head>
+
+<body class="body">
+    <h1>TODO List Flask</h1>
+    <form class="input-container" action="{{ url_for('home') }}" method="POST">
+        <input type="text" placeholder="Enter Your TODO" id="input-todo" name="todo_name">
+        <button id="add-todo">+</button>
+    </form>
+    <h1>Todos</h1>
+    <div class="todo-container">
+        {% for item in items %}
+        <div class="todo">
+            <p>{{ item.name}}</p>
+            <div class="action">
+                <form action="{{ url_for('checked', todo_id= item.id) }}" , method="POST">
+                    <input type="checkbox" {% if item.checked %}checked{% endif %} onchange="this.form.submit()">
+                </form>
+                <form action="{{ url_for('delete', todo_id=item.id) }}" , method="POST">
+                    <button>DELETE</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>
